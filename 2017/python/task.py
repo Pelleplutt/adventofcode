@@ -1,5 +1,6 @@
-import os.path
 import glob
+import os.path
+import sys
 
 class testdata(object):
     def __init__(self, basename):
@@ -25,6 +26,13 @@ class task(object):
                 print("{0} NOT OK, got '{1}' expected '{2}'".format(test.desc, out, test.output))
             else:
                 print("{0} OK".format(test.desc))
+
+    def main(self):
+        if len(sys.argv) > 1:
+            for data in sys.argv[1:]:
+                print("{0}: {1}".format(data, self.run(data)))
+        else:
+            self.runtests()
 
     def tests(self):
         for fil in sorted(glob.glob(os.path.join(self.testpath, '*.in'))):

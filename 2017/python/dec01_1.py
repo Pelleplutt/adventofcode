@@ -12,13 +12,4 @@ class dec01_1(task.task):
         return str(sum)
 
 if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) > 1:
-        t = dec01_1()
-        for a in sys.argv[1:]:
-            print("{0}: {1}".format(a, t.run(a)))
-        pass
-    else:
-        dec01_1().runtests()
-
+    dec01_1().main()
