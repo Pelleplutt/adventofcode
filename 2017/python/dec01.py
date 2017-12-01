@@ -1,5 +1,4 @@
 import task
-import pprint
 
 class dec01_1(task.task):
     def run(self, data):
