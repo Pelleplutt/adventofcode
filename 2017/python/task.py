@@ -15,17 +15,30 @@ class testdata(object):
     def loadfile(self, file):
         return open(file, 'r').readline().rstrip().rstrip()
 
+    def run(self, task, echo=False):
+        out = task.run(self.input)
+        if echo:
+            print("{0}: {1}".format(self.input, task.run(out)))
+        if out != self.output:
+            if echo:
+                print("{0} NOT OK, expected '{2}'".format(self.desc, self.output))
+            else:
+                print("{0} NOT OK, got '{1}' expected '{2}'".format(self.desc, out, self.output))
+        else:
+            print("{0} OK".format(self.desc))
+
+
 class task(object):
     def __init__(self):
         self.testpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'tests', self.__class__.__name__)
 
-    def runtests(self):
+    def runtest(self, name, echo=False):
+        test = testdata(os.path.join(self.testpath, name))
+        test.run(self, echo)
+
+    def runtests(self, echo=False):
         for test in self.tests():
-            out = self.run(test.input)
-            if out != test.output:
-                print("{0} NOT OK, got '{1}' expected '{2}'".format(test.desc, out, test.output))
-            else:
-                print("{0} OK".format(test.desc))
+            test.run(self, echo)
 
     def main(self):
         if len(sys.argv) > 1:
