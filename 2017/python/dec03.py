@@ -1,6 +1,15 @@
 import task
 import math
-import pprint
+
+# 65 64 63  62  61  60  59 58 57
+# 66 37 36  35  34  33  32 31 56
+# 67 38 17  16  15  14  13 30 55
+# 68 39 18   5   4   3  12 29 54
+# 69 40 19   6   1   2  11 28 53
+# 70 41 20   7   8   9  10 27 52
+# 71 42 21  22  23  24  25 26 51
+# 72 43 44  45  46  47  48 49 50
+# 73 74 75  76  77  78  79 80 81 
 
 class dec03_1(task.task):
     def run(self, data):
@@ -38,10 +47,6 @@ class dec03_1(task.task):
         return str(steps)
 
 class dec03_2(task.task):
-    def getnumatpos(self, gridsize, edge, edgeoffset):
-        edgenums = self.getedgevalues(gridsize, edge)
-        return edgenums[edgeoffset]
-
     def getedgevalues(self, gridsize, edge):
         if gridsize == 1:
             return [1]
@@ -53,13 +58,13 @@ class dec03_2(task.task):
         return list(reversed(range(edgemin + 1, edgemax + 1)))
 
     def getlowerorderneighbours(self, home):
-        neighbours = []
         # special case
         if home == 1:
-            return neighbours
+            return []
 
+        neighbours = []
 
-        # Perform the basic calculations from above to find our edge and offset
+        # Perform the basic calculations from dec03_1 to find our edge and offset
         # in the matrix
         gridsize = int(math.sqrt(home))
 
@@ -78,7 +83,7 @@ class dec03_2(task.task):
         # If we are not first, our immediate lower will always neighbour us
         neighbours.append(home - 1)
 
-        # calculate the size immediate inner grid from us
+        # calculate the size and contents of the immediate inner grid from us
         innergridsize = gridsize - 2
 
         inneredges = []
@@ -88,77 +93,67 @@ class dec03_2(task.task):
             inneredges.append(self.getedgevalues(innergridsize, genedge))
             ouredges.append(self.getedgevalues(gridsize, genedge))
 
-        print("! inneredges={0}".format(inneredges))
-        print("! ouredges={0}".format(ouredges))
-
-        # corneroffset is position relative to the corner, offset 0 means we are in a corner, 
+        # corneroffset is position relative to the corner, offset 0 means we are in a corner,
         # -1 means we are on the "higher number side" of the corner, +1 on the lower side
         corneroffset = (gridmax - home) % (gridsize - 1)
 
         if corneroffset == 0:
-                # Are we a "corner number", if so we will only neighbour one
-                # additional other, i.e. the corner in the inner ring and
-                # possibly the first number on this grid
+            # Are we a "corner number", if so we will only neighbour one
+            # additional other, i.e. the corner in the inner ring and
+            # possibly the first number on this grid
+
+            # Edge 0 corner, add the first number in our gridsize
             if edge == 0 and home > 1:
-                print("! is corner, edge is 0, add {0}".format(ouredges[3][-1]))
                 neighbours.append(ouredges[3][-1])
 
+            # Add the corner number from the corner in the inner grid
             innercornervalue = inneredges[edge][0]
-            print("! is a corner, add {0}".format(innercornervalue))
             neighbours.append(innercornervalue)
 
         if corneroffset == 1:
-            print("! is corner + 1 (lower integer side)")
-                # Are next to a corner on the lower side?, if so we will neighbour the inner
-                # corner and the square at our relative position to the corner
+            # Are next to a corner on the lower side?, if so we will neighbour the inner
+            # corner and the square at our relative position to the corner
+
             # add neighbour in our corner
             innercornervalue = inneredges[edge][0]
-            print("! is corner + 1, add {0}".format(innercornervalue))
             neighbours.append(innercornervalue)
 
+            # Add the immediate next to in the inner ring
             if len(inneredges[edge]) > 1:
                 nexttoinnercornervalue = inneredges[edge][1]
-                print("! is corner + 1, nextto add {0}".format(nexttoinnercornervalue))
                 neighbours.append(nexttoinnercornervalue)
 
+            # Edge 0 corner, add the first number in our gridsize
             if edge == 0 and home > 1:
-                print("! is corner - 1, edge is 0, add {0}".format(ouredges[3][-1]))
                 neighbours.append(ouredges[3][-1])
         if corneroffset == (gridsize - 2):
-            print("! is corner - 1 (higher integer side)")
-                # Are next to a corner on the higher side? We will border our
-                # home -2 (unless we are on the 3rd edge), the immediate corner
-                # on the inside and the number on our correspodning offset to
-                # that corner
+            # Are next to a corner on the higher side? We will border our
+            # home -2 (unless we are on the 3rd edge), the immediate corner
+            # on the inside and the number on our correspodning offset to
+            # that corner
+
             # Add cross corner to the lower integer side
             if edge < 3:
-                print("! is corner - 1, add home - 2 {0}".format(home - 2))
                 neighbours.append(home - 2)
 
-            # For all edges but 3, add the corner number in the inner grid
-            #if edge < 3:
-            #    print("! is corner - 1, edge is not 0, add {0}".format(inneredges[edge][-1]))
-            #    neighbours.append(inneredges[edge][-1])
+            # Add immediate next to neighbour
+            if len(inneredges[edge]) > 1:
+                innernexttoadd = inneredges[edge][-1]
+                neighbours.append(innernexttoadd)
 
-            innernexttoadd = inneredges[edge][-1]
-            print("! is corner - 1, add {0}".format(innernexttoadd))
-            neighbours.append(innernexttoadd)
-
+            # Corner cases for the rest of edges as we need to peek into the
+            # neighbouring edges for the bordering
             if edge == 2 and len(inneredges[edge]) > 1:
                 nexttoinnercornervalue = inneredges[3][0]
-                print("! is corner - 1, nextto add edge 3 0 {0}".format(nexttoinnercornervalue))
                 neighbours.append(nexttoinnercornervalue)
             elif edge == 1 and len(inneredges[edge]) > 1:
                 nexttoinnercornervalue = inneredges[2][0]
-                print("! is corner - 1, nextto add edge 2 0 {0}".format(nexttoinnercornervalue))
                 neighbours.append(nexttoinnercornervalue)
             elif edge == 0 and len(inneredges[edge]) > 1:
                 nexttoinnercornervalue = inneredges[1][0]
-                print("! is corner - 1, nextto add edge 1 0 {0}".format(nexttoinnercornervalue))
                 neighbours.append(nexttoinnercornervalue)
 
         if corneroffset > 1 and corneroffset < (gridsize - 2):
-            print("! is a middle number")
             # Are we not in a corner not next to it? we will neighbour 3
             # additional ones, the one directly inner to us and its two
             # neighbours
@@ -170,7 +165,6 @@ class dec03_2(task.task):
             cornerhighoffset = cornerhigh - home
 
             offset = cornerhighoffset - 1
-            print("! cornerhigh={0}, cornerhighoffset={1}, offset={2}".format(cornerhigh, cornerhighoffset, offset))
 
             # Make sure to cater for wrapping to neighbouring edge
             neighbours.append(inneredges[edge][offset - 1])
@@ -246,20 +240,18 @@ class dec03_2(task.task):
 
         print(notok)
 
-
     def run(self, data):
         data = int(data)
+
         # we go from lower to higher, so only need to check the numbers we have
         # already done, store the done numbers in the correct offset in this
         # array
-
         cellsfilled = [0]
 
         cell = 0
         while True:
             cell = cell + 1
             neighbours = self.getlowerorderneighbours(cell)
-            print("! neighbours: {0}".format(neighbours))
             if cell == 1:
                 cellsum = 1
             else:
@@ -267,8 +259,6 @@ class dec03_2(task.task):
 
             for neighbour in neighbours:
                 cellsum = cellsum + cellsfilled[neighbour]
-
-            print("! cellsum: {0}".format(cellsum))
 
             if cellsum > data:
                 return str(cellsum)
