@@ -25,19 +25,16 @@ class dec02_1(task.task):
 
         What is the checksum for the spreadsheet in your puzzle input?
     """
-    def init(self):
-        self.in_multiline = True
-
     def rowchecksum(self, row):
         minv = min(row)
         maxv = max(row)
         return maxv - minv
 
-    def run(self, data):
+    def run_list(self, data):
         sum = 0
         for line in data:
             sum = sum + self.rowchecksum(list(map(lambda x: int(x), line.split())))
-        return str(sum)
+        return sum
 
 class dec02_2(task.task):
     """
@@ -67,9 +64,6 @@ class dec02_2(task.task):
 
         What is the sum of each row's result in your puzzle input?
     """
-    def init(self):
-        self.in_multiline = True
-
     def rowchecksum(self, row):
         row = sorted(row)
         for numerator in reversed(row):
@@ -81,12 +75,12 @@ class dec02_2(task.task):
                     break
         return 0
 
-    def run(self, data):
+    def run_list(self, data):
         sum = 0
         for line in data:
             sum = sum + self.rowchecksum(list(map(lambda x: int(x), line.split())))
-        return str(sum)
+        return sum
 
 if __name__ == "__main__":
-    dec02_1().main()
-    dec02_2().main()
+    dec02_1().runtests()
+    dec02_2().runtests()

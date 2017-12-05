@@ -39,8 +39,10 @@ class dec03_1(task.task):
             Data from square 1024 must be carried 31 steps.
             How many steps are required to carry the data from the square identified in your puzzle input all the way to the access port?
     """
+    def init(self):
+        self.in_int = True
+
     def run(self, data):
-        data = int(data)
         gridsize = int(math.sqrt(data))
         # Size is always odd as we increment by two from one
         if gridsize * gridsize < data:
@@ -71,7 +73,7 @@ class dec03_1(task.task):
         steps = steps + abs(edgepivot - data)
 
         # tada.wav
-        return str(steps)
+        return steps
 
 class dec03_2(task.task):
     """
@@ -96,6 +98,9 @@ class dec03_2(task.task):
             362  747  806--->   ...
             What is the first value written that is larger than your puzzle input?
     """
+    def init(self):
+        self.in_int = True
+
     def getedgevalues(self, gridsize, edge):
         if gridsize == 1:
             return [1]
@@ -290,8 +295,6 @@ class dec03_2(task.task):
         print(notok)
 
     def run(self, data):
-        data = int(data)
-
         # we go from lower to higher, so only need to check the numbers we have
         # already done, store the done numbers in the correct offset in this
         # array
@@ -310,10 +313,10 @@ class dec03_2(task.task):
                 cellsum = cellsum + cellsfilled[neighbour]
 
             if cellsum > data:
-                return str(cellsum)
+                return cellsum
 
             cellsfilled.append(cellsum)
 
 if __name__ == "__main__":
-    dec03_1().main()
-    dec03_2().main()
+    dec03_1().runtests()
+    dec03_2().runtests()

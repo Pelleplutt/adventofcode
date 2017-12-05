@@ -39,12 +39,9 @@ class dec05_1(task.task):
     How many steps does it take to reach the exit?
     """
     def init(self):
-        self.in_multiline = True
+        self.in_int = True
 
-    def run(self, data):
-        for idx, line in enumerate(data):
-            data[idx] = int(line)
-
+    def run_list(self, data):
         max = len(data)
         count = 0
         ip = 0
@@ -55,7 +52,7 @@ class dec05_1(task.task):
             ip = ip + next
             count = count + 1
 
-        return str(count)
+        return count
 
 class dec05_2(task.task):
     """
@@ -68,12 +65,9 @@ class dec05_2(task.task):
     How many steps does it now take to reach the exit?
     """
     def init(self):
-        self.in_multiline = True
+        self.in_int = True
 
-    def run(self, data):
-        for idx, line in enumerate(data):
-            data[idx] = int(line)
-
+    def run_list(self, data):
         ip = 0
         max = len(data)
         count = 0
@@ -87,8 +81,8 @@ class dec05_2(task.task):
             ip = ip + next
             count = count + 1
 
-        return str(count)
+        return count
 
 if __name__ == "__main__":
-    dec05_1().main()
-    dec05_2().main()
+    dec05_1().runtests()
+    dec05_2().runtests()

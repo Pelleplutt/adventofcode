@@ -29,7 +29,7 @@ class dec01_1(task.task):
             for idx, d in enumerate(data):
                 if data[idx - 1] == d:
                     sum = sum + int(d)
-        return str(sum)
+        return sum
 
 class dec01_2(task.task):
     """
@@ -57,8 +57,8 @@ class dec01_2(task.task):
         for idx, d in enumerate(data[:half]):
             if d == data[half + idx]:
                 sum = sum + int(d) * 2
-        return str(sum)
+        return sum
 
 if __name__ == "__main__":
-    dec01_1().main()
-    dec01_2().main()
+    dec01_1().runtests()
+    dec01_2().runtests()

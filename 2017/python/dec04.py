@@ -15,10 +15,7 @@ class dec04_1(task.task):
         aa bb cc dd aaa is valid - aa and aaa count as different words.
         The system's full passphrase list is available as your puzzle input. How many passphrases are valid?
     """
-    def init(self):
-        self.in_multiline = True
-
-    def run(self, data):
+    def run_list(self, data):
         valid = 0
         for line in data:
             dupe = {}
@@ -31,7 +28,7 @@ class dec04_1(task.task):
             if linevalid:
                 valid = valid + 1
 
-        return str(valid)
+        return valid
 
 class dec04_2(task.task):
     """
@@ -49,10 +46,7 @@ class dec04_2(task.task):
         oiii ioii iioi iiio is not valid - any of these words can be rearranged to form any other word.
         Under this new system policy, how many passphrases are valid?
     """
-    def init(self):
-        self.in_multiline = True
-
-    def run(self, data):
+    def run_list(self, data):
         valid = 0
         for line in data:
             dupe = {}
@@ -66,8 +60,8 @@ class dec04_2(task.task):
             if linevalid:
                 valid = valid + 1
 
-        return str(valid)
+        return valid
 
 if __name__ == "__main__":
-    dec04_1().main()
-    dec04_2().main()
+    dec04_1().runtests()
+    dec04_2().runtests()
