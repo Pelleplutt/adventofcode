@@ -11,7 +11,7 @@ import math
 # 72 43 44  45  46  47  48 49 50
 # 73 74 75  76  77  78  79 80 81 
 
-class dec03_1(task.task):
+class dec03_1(task.int_task):
     """
     You come across an experimental new kind of memory stored on an infinite
     two-dimensional grid.
@@ -39,9 +39,6 @@ class dec03_1(task.task):
             Data from square 1024 must be carried 31 steps.
             How many steps are required to carry the data from the square identified in your puzzle input all the way to the access port?
     """
-    def init(self):
-        self.in_int = True
-
     def run(self, data):
         gridsize = int(math.sqrt(data))
         # Size is always odd as we increment by two from one
@@ -75,7 +72,7 @@ class dec03_1(task.task):
         # tada.wav
         return steps
 
-class dec03_2(task.task):
+class dec03_2(task.int_task):
     """
     As a stress test on the system, the programs here clear the grid and then
     store the value 1 in square 1. Then, in the same allocation order as shown
@@ -98,9 +95,6 @@ class dec03_2(task.task):
             362  747  806--->   ...
             What is the first value written that is larger than your puzzle input?
     """
-    def init(self):
-        self.in_int = True
-
     def getedgevalues(self, gridsize, edge):
         if gridsize == 1:
             return [1]

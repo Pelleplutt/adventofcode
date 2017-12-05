@@ -1,6 +1,6 @@
 import task
 
-class dec04_1(task.task):
+class dec04_1(task.str_task):
     """
     A new system policy has been put in place that requires all accounts to
     use a passphrase instead of simply a password. A passphrase consists of a
@@ -30,7 +30,7 @@ class dec04_1(task.task):
 
         return valid
 
-class dec04_2(task.task):
+class dec04_2(task.str_task):
     """
     For added security, yet another system policy has been put in place.
     Now, a valid passphrase must contain no two words that are anagrams of each

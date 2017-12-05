@@ -1,6 +1,6 @@
 import task
 
-class dec02_1(task.task):
+class dec02_1(task.str_task):
     """
     As you walk through the door, a glowing humanoid shape yells in your
     direction. "You there! Your state appears to be idle. Come help us repair
@@ -36,7 +36,7 @@ class dec02_1(task.task):
             sum = sum + self.rowchecksum(list(map(lambda x: int(x), line.split())))
         return sum
 
-class dec02_2(task.task):
+class dec02_2(task.str_task):
     """
     "Great work; looks like we're on the right track after all. Here's a star
     for your effort." However, the program seems a little worried. Can programs

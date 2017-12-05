@@ -1,6 +1,6 @@
 import task
 
-class dec05_1(task.task):
+class dec05_1(task.int_task):
     """
     An urgent interrupt arrives from the CPU: it's trapped in a maze of jump
     instructions, and it would like assistance from any programs with spare
@@ -38,9 +38,6 @@ class dec05_1(task.task):
 
     How many steps does it take to reach the exit?
     """
-    def init(self):
-        self.in_int = True
-
     def run_list(self, data):
         max = len(data)
         count = 0
@@ -54,7 +51,7 @@ class dec05_1(task.task):
 
         return count
 
-class dec05_2(task.task):
+class dec05_2(task.int_task):
     """
     Now, the jumps are even stranger: after each jump, if the offset was three
     or more, instead decrease it by 1. Otherwise, increase it by 1 as before.
@@ -64,9 +61,6 @@ class dec05_2(task.task):
 
     How many steps does it now take to reach the exit?
     """
-    def init(self):
-        self.in_int = True
-
     def run_list(self, data):
         ip = 0
         max = len(data)

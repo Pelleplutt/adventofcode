@@ -101,3 +101,12 @@ class task(object):
     # def run(self, line)
     # or
     # def run_list(self, data)
+
+
+class int_task(task):
+    def init(self):
+        self.in_int = True
+
+
+class str_task(task):
+    pass

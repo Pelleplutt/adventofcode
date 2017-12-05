@@ -1,6 +1,6 @@
 import task
 
-class dec01_1(task.task):
+class dec01_1(task.str_task):
     """
     You're standing in a room with "digitization quarantine" written in LEDs
     along one wall. The only door is locked, but it includes a small interface.
@@ -31,7 +31,7 @@ class dec01_1(task.task):
                     sum = sum + int(d)
         return sum
 
-class dec01_2(task.task):
+class dec01_2(task.str_task):
     """
     You notice a progress bar that jumps to 50% completion. Apparently, the
     door isn't yet satisfied, but it did emit a star as encouragement. The
