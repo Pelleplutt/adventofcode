@@ -29,20 +29,26 @@ class testdata(object):
                 return False
         return True
 
-    def echoresult(self, input, result):
+    def echoresult(self, input, result, maxlines=10):
         print("IN    : ", end='')
         if type(input) == list:
             print(input[0])
-            for line in input[1:]:
-                print("        " + line)
+            for idx, line in enumerate(input[1:]):
+                if maxlines is not None and idx > maxlines:
+                    print("...")
+                    break
+                print("       ", line)
         else:
             print(input)
 
         print("RESULT: ", end='')
         if type(result) == list:
             print(result[0])
-            for line in result[1:]:
-                print("        " + line)
+            for idx, line in enumerate(result[1:]):
+                if maxlines is not None and idx > maxlines:
+                    print("...")
+                    break
+                print("       " + line)
         else:
             print(result)
 
