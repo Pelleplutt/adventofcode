@@ -70,8 +70,11 @@ class testdata(object):
             print("{0} OK".format(self.desc))
         else:
             echoresult(self.input, out)
-            print("{0} NOT OK, expected".format(self.desc))
-            echoresult(self.input, self.facit)
+            if len(self.facit):
+                print("{0} NOT OK, expected".format(self.desc))
+                echoresult(self.input, self.facit)
+            else:
+                print("{0} NOT OK".format(self.desc))
 
 
 class task(object):
