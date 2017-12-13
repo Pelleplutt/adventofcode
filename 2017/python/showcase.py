@@ -12,6 +12,7 @@ from dec09 import dec09_1, dec09_2
 from dec10 import dec10_1, dec10_2
 from dec11 import dec11_1, dec11_2
 from dec12 import dec12_1, dec12_2
+from dec13 import dec13_1, dec13_2
 
 dec01_1().runtest('challenge', echo=True)
 dec01_2().runtest('challenge', echo=True)
@@ -37,3 +38,5 @@ dec11_1().runtest('challenge', echo=True)
 dec11_2().runtest('challenge', echo=True)
 dec12_1().runtest('challenge', echo=True)
 dec12_2().runtest('challenge', echo=True)
+dec13_1().runtest('challenge', echo=True)
+dec13_2().runtest('challenge', echo=True)
