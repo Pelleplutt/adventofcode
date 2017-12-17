@@ -3,16 +3,17 @@ import os.path
 import sys
 
 def echoresult(input, result, maxlines=10):
-    print("IN    : ", end='')
-    if type(input) == list:
-        print(input[0])
-        for idx, line in enumerate(input[1:]):
-            if maxlines is not None and idx > maxlines:
-                print("...")
-                break
-            print("       ", line)
-    else:
-        print(input)
+    if input is not None:
+        print("IN    : ", end='')
+        if type(input) == list:
+            print(input[0])
+            for idx, line in enumerate(input[1:]):
+                if maxlines is not None and idx > maxlines:
+                    print("...")
+                    break
+                print("       ", line)
+        else:
+            print(input)
 
     print("RESULT: ", end='')
     if type(result) == list:
@@ -72,7 +73,7 @@ class testdata(object):
             echoresult(self.input, out)
             if len(self.facit):
                 print("{0} NOT OK, expected".format(self.desc))
-                echoresult(self.input, self.facit)
+                echoresult(None, self.facit)
             else:
                 print("{0} NOT OK".format(self.desc))
 
