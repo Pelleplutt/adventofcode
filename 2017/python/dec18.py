@@ -7,39 +7,31 @@ class dec18_1(task.str_task):
         except:
             return regs.get(arg, 0)
 
-    def run_list(self, data):
+    def run_list(self, lines):
         regs = {}
-
-        ofs = 0
+        ip = 0
         lsound = None
-        while ofs < len(data):
-            arg = data[ofs].split(' ')
-            if len(arg) > 2:
-                instr, a1, a2 = arg
-            else:
-                instr, a1 = arg
-                a2 = None
 
-            ofsmod = 1
-            v1 = self.get_val(regs, a1)
+        while ip < len(lines):
+            instr, *a = lines[ip].split(' ')
+            ipincr = 1
 
             if instr == 'snd':
-                lsound = v1
+                lsound = self.get_val(regs, a[0])
             elif instr == 'set':
-                regs[a1] = self.get_val(regs, a2)
+                regs[a[0]] = self.get_val(regs, a[1])
             elif instr == 'add':
-                regs[a1] = regs.get(a1, 0) + self.get_val(regs, a2)
+                regs[a[0]] = regs.get(a[0], 0) + self.get_val(regs, a[1])
             elif instr == 'mul':
-                regs[a1] = regs.get(a1, 0) * self.get_val(regs, a2)
+                regs[a[0]] = regs.get(a[0], 0) * self.get_val(regs, a[1])
             elif instr == 'mod':
-                regs[a1] = regs.get(a1, 0) % self.get_val(regs, a2)
-            elif instr == 'rcv' and v1 > 0:
+                regs[a[0]] = regs.get(a[0], 0) % self.get_val(regs, a[1])
+            elif instr == 'rcv' and self.get_val(regs, a[0]) > 0:
                 return lsound
-            elif instr == 'jgz' and v1 > 0:
-                ofsmod = self.get_val(regs, a2)
+            elif instr == 'jgz' and self.get_val(regs, a[0]) > 0:
+                ipincr = self.get_val(regs, a[1])
 
-            ofs += ofsmod
-
+            ip += ipincr
 
 class dec18_2(task.str_task):
     def get_val(self, regs, arg):
@@ -48,66 +40,56 @@ class dec18_2(task.str_task):
         except:
             return regs.get(arg, 0)
 
-    def run_prg(self, data, regs, ofs, sent, sendstack, getstack):
-        while ofs < len(data):
-            arg = data[ofs].split(' ')
-            if len(arg) > 2:
-                instr, a1, a2 = arg
-            else:
-                instr, a1 = arg
-                a2 = None
-
-            ofsmod = 1
-            v1 = self.get_val(regs, a1)
+    def run_prg(self, lines, regs, ip, sendcount, sendstack, getstack):
+        while ip < len(lines):
+            instr, *a = lines[ip].split(' ')
+            ipincr = 1
 
             if instr == 'snd':
-                sendstack.append(v1)
-                sent += 1
+                sendstack.append(self.get_val(regs, a[0]))
+                sendcount += 1
             elif instr == 'set':
-                regs[a1] = self.get_val(regs, a2)
+                regs[a[0]] = self.get_val(regs, a[1])
             elif instr == 'add':
-                regs[a1] = regs.get(a1, 0) + self.get_val(regs, a2)
+                regs[a[0]] = regs.get(a[0], 0) + self.get_val(regs, a[1])
             elif instr == 'mul':
-                regs[a1] = regs.get(a1, 0) * self.get_val(regs, a2)
+                regs[a[0]] = regs.get(a[0], 0) * self.get_val(regs, a[1])
             elif instr == 'mod':
-                regs[a1] = regs.get(a1, 0) % self.get_val(regs, a2)
+                regs[a[0]] = regs.get(a[0], 0) % self.get_val(regs, a[1])
             elif instr == 'rcv':
                 if len(getstack):
-                    regs[a1] = getstack.pop(0)
+                    regs[a[0]] = getstack.pop(0)
                 else:
-                    return ofs, sent
-            elif instr == 'jgz' and v1 > 0:
-                ofsmod = self.get_val(regs, a2)
+                    return ip, sendcount
+            elif instr == 'jgz' and self.get_val(regs, a[0]) > 0:
+                ipincr = self.get_val(regs, a[1])
 
-            ofs += ofsmod
+            ip += ipincr
 
-        return -1, sent
+        return -1, sendcount
 
     def run_list(self, data):
-        r0 = {}
-        r0['p'] = 0
-        ofs0 = 0
+        regs0 = {}
+        regs0['p'] = 0
+        ip0 = 0
         stack0 = []
-        isent0 = 0
+        sendcount0 = 0
 
-        r1 = {}
-        r1['p'] = 1
-        ofs1 = 0
+        regs1 = {}
+        regs1['p'] = 1
+        ip1 = 0
         stack1 = []
-        isent1 = 0
+        sendcount1 = 0
 
         while True:
-            ofs0, isent0 = self.run_prg(data, r0, ofs0, isent0, stack1, stack0)
+            ip0, sendcount0 = self.run_prg(data, regs0, ip0, sendcount0, stack1, stack0)
+            ip1, sendcount1 = self.run_prg(data, regs1, ip1, sendcount1, stack0, stack1)
 
-            if ofs0 < 0:
-                return isent1
-            else:
-                ofs1, isent1 = self.run_prg(data, r1, ofs1, isent1, stack0, stack1)
-                if ofs1 < 0:
-                    return isent1
+            if ip0 < 0 or ip1 < 0:
+                return sendcount1
 
             if len(stack0) == 0 and len(stack1) == 0:
-                return isent1
+                return sendcount1
 
 
 if __name__ == "__main__":
