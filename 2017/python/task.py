@@ -42,7 +42,7 @@ class testdata(object):
             if integers:
                 lines.append(int(line))
             else:
-                lines.append(line.rstrip())
+                lines.append(line.rstrip('\r\n'))
         return lines
 
     def resultok(self, result, facit):
