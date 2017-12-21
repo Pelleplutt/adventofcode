@@ -19,6 +19,8 @@ from dec16 import dec16_1, dec16_2
 from dec17 import dec17_1, dec17_2
 from dec18 import dec18_1, dec18_2
 from dec19 import dec19_1, dec19_2
+from dec20 import dec20_1, dec20_2
+from dec21 import dec21_1, dec21_2
 
 dec01_1().runtest('challenge', echo=True)
 dec01_2().runtest('challenge', echo=True)
@@ -58,3 +60,7 @@ dec18_1().runtest('challenge', echo=True)
 dec18_2().runtest('challenge', echo=True)
 dec19_1().runtest('challenge', echo=True)
 dec19_2().runtest('challenge', echo=True)
+dec20_1().runtest('challenge', echo=True)
+dec20_2().runtest('challenge', echo=True)
+dec21_1().runtest('challenge', echo=True)
+dec21_2().runtest('challenge', echo=True)
