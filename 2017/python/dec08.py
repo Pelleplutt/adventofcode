@@ -2,8 +2,6 @@ import task
 import re
 
 class dec08_1(task.str_task):
-    """
-    """
     def run_list(self, data):
         regs = {}
         for line in data:
@@ -32,8 +30,6 @@ class dec08_1(task.str_task):
         return max
 
 class dec08_2(task.str_task):
-    """
-    """
     def run_list(self, data):
         regs = {}
         max = None

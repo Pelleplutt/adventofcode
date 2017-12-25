@@ -1,8 +1,6 @@
 import task
 
 class dec09_1(task.str_task):
-    """
-    """
     def parse_group(self, pos, line, score):
         localscore = score
         while pos < len(line):
@@ -29,8 +27,6 @@ class dec09_1(task.str_task):
         return score
 
 class dec09_2(task.str_task):
-    """
-    """
     def parse_group(self, pos, line):
         localscore = 0
         while pos < len(line):

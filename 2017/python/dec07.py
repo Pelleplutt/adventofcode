@@ -2,8 +2,6 @@ import task
 import re
 
 class dec07_1(task.str_task):
-    """
-    """
     def run_list(self, data):
         discs = {}
         for line in data:
@@ -32,9 +30,6 @@ class dec07_1(task.str_task):
         return None
 
 class dec07_2(task.str_task):
-    """
-    """
-
     def stackweight(self, discs, id):
         disc = discs[id]
         if disc.get('stackweight') is None:
