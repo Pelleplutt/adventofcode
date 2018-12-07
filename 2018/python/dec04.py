@@ -86,5 +86,5 @@ class dec04_2(task.str_task):
 
 
 if __name__ == "__main__":
-    #dec04_1().runtests()
+    dec04_1().runtests()
     dec04_2().runtests()
