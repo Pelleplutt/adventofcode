@@ -4,7 +4,6 @@ class dec08_1(task.str_task):
     def parse_node(self, pos, data):
         child_count = data[pos]
         metadata_count = data[pos + 1]
-        metadata = []
         metadata_sum = 0
         pos += 2
 
@@ -13,7 +12,6 @@ class dec08_1(task.str_task):
             metadata_sum += sub_metadata_sum
 
         for md in range(metadata_count):
-            metadata.append(data[pos])
             metadata_sum += data[pos]
             pos += 1
 
@@ -30,7 +28,6 @@ class dec08_2(task.str_task):
         child_count = data[pos]
         children = []
         metadata_count = data[pos + 1]
-        metadata = []
         metadata_sum = 0
         pos += 2
 
@@ -41,7 +38,6 @@ class dec08_2(task.str_task):
             md = data[pos]
             pos += 1
             if child_count == 0:
-                metadata.append(md)
                 metadata_sum += md
             else:
                 if md <= len(children):
