@@ -1,7 +1,7 @@
 import task
 import string
 
-class dec05_1(task.str_task):
+class Dec05_1(task.StrTask):
     def run(self, line):
         newline = ''
         linepos = 0
@@ -26,7 +26,7 @@ class dec05_1(task.str_task):
 
 
 
-class dec05_2(task.str_task):
+class Dec05_2(task.StrTask):
     def calc_polymer(self, strip, line):
         line = line.replace(strip, '').replace(strip.upper(), '')
 

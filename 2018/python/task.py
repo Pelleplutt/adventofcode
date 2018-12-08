@@ -26,7 +26,7 @@ def echoresult(input, result, maxlines=10):
     else:
         print(result)
 
-class testdata(object):
+class TestData(object):
     def __init__(self, basename, in_int):
         self.basename = basename
         self.desc = os.path.split(basename)[1]
@@ -78,7 +78,7 @@ class testdata(object):
                 print("{0} NOT OK".format(self.desc))
 
 
-class task(object):
+class Task(object):
     def __init__(self):
         self.testpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'tests', self.__class__.__name__)
         self.desc = self.__class__.__name__
@@ -89,7 +89,7 @@ class task(object):
         pass
 
     def runtest(self, name, echo=False):
-        test = testdata(os.path.join(self.testpath, name), self.in_int)
+        test = TestData(os.path.join(self.testpath, name), self.in_int)
         test.run(self, echo)
 
     def runtests(self, echo=False):
@@ -99,7 +99,7 @@ class task(object):
 
     def tests(self):
         for fil in sorted(glob.glob(os.path.join(self.testpath, '*.in'))):
-            yield testdata(os.path.splitext(fil)[0], self.in_int)
+            yield TestData(os.path.splitext(fil)[0], self.in_int)
 
     # implement either
     # def run(self, line)
@@ -107,10 +107,10 @@ class task(object):
     # def run_list(self, data)
 
 
-class int_task(task):
+class IntTask(Task):
     def init(self):
         self.in_int = True
 
 
-class str_task(task):
+class StrTask(Task):
     pass

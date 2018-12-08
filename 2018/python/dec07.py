@@ -1,6 +1,6 @@
 import task
 
-class dec07_1(task.str_task):
+class Dec07_1(task.StrTask):
     def run_list(self, data):
         dep = {}
         objs = {}
@@ -39,7 +39,7 @@ class dec07_1(task.str_task):
 
         
 
-class dec07_2(task.str_task):
+class Dec07_2(task.StrTask):
     def run_list(self, data):
         dep = {}
         objs = {}
