@@ -81,18 +81,17 @@ class dec14_2(task.str_task):
 
     def expand_reg(self, lines, regions, lineno, pos, region):
         count = 0
-        if lines[lineno][pos] == '#':
-            if regions[lineno][pos] is None:
-                count = 1
-                regions[lineno][pos] = region
-                if lineno > 0 and lines[lineno - 1][pos] == '#':
-                    count += self.expand_reg(lines, regions, lineno - 1, pos, region)
-                if lineno < 127 and lines[lineno + 1][pos] == '#':
-                    count += self.expand_reg(lines, regions, lineno + 1, pos, region)
-                if pos > 0 and lines[lineno][pos - 1] == '#':
-                    count += self.expand_reg(lines, regions, lineno, pos - 1, region)
-                if pos < 127 and lines[lineno][pos + 1] == '#':
-                    count += self.expand_reg(lines, regions, lineno, pos + 1, region)
+        if lines[lineno][pos] == '#' and regions[lineno][pos] is None:
+            count = 1
+            regions[lineno][pos] = region
+            if lineno > 0 and lines[lineno - 1][pos] == '#':
+                count += self.expand_reg(lines, regions, lineno - 1, pos, region)
+            if lineno < 127 and lines[lineno + 1][pos] == '#':
+                count += self.expand_reg(lines, regions, lineno + 1, pos, region)
+            if pos > 0 and lines[lineno][pos - 1] == '#':
+                count += self.expand_reg(lines, regions, lineno, pos - 1, region)
+            if pos < 127 and lines[lineno][pos + 1] == '#':
+                count += self.expand_reg(lines, regions, lineno, pos + 1, region)
         return count
 
     def run(self, data):

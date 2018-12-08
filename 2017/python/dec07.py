@@ -53,11 +53,10 @@ class dec07_2(task.str_task):
             if minw is None or w < maxw:
                 minw = w
 
-        if maxw is not None:
-            if len(list(filter(lambda x: x != minw, weights.values()))) > 0:
-                for oid, ow in weights.items():
-                    if ow != minw:
-                        return oid, maxw, minw
+        if maxw is not None and len(list(filter(lambda x: x != minw, weights.values()))) > 0:
+            for oid, ow in weights.items():
+                if ow != minw:
+                    return oid, maxw, minw
 
         return None, maxw, minw
 

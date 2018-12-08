@@ -37,7 +37,6 @@ class Dec07_1(task.StrTask):
 
         return order
 
-        
 
 class Dec07_2(task.StrTask):
     def run_list(self, data):
@@ -54,7 +53,6 @@ class Dec07_2(task.StrTask):
             objs[refobj] = 1
             objs[obj] = 1
 
-        doneorder = ''
         busyworkers = 0
         seconds = 0
         workers_busytime = []
@@ -81,8 +79,7 @@ class Dec07_2(task.StrTask):
                     busyworkers -= 1
                     c = workers_task.pop(i)
                     objs.pop(c)
-                    doneorder += c
-                    
+
                     topop = []
                     for refobj in dep.keys():
                         dep[refobj].pop(c, 0)
