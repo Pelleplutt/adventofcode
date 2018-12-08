@@ -1,5 +1,4 @@
 import task
-import pprint
 
 class dec06_1(task.str_task):
 
