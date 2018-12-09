@@ -1,6 +1,6 @@
 import task
 
-class Dec02_1(task.StrTask):
+class dec02_1(task.StrTask):
     def run_list(self, data):
         twos = 0
         threes = 0
@@ -18,7 +18,7 @@ class Dec02_1(task.StrTask):
 
 
 
-class Dec02_2(task.StrTask):
+class dec02_2(task.StrTask):
     def find1diff(self, s1, s2):
         d = 0
         dp = -1

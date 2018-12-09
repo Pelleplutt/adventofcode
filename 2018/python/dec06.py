@@ -1,6 +1,6 @@
 import task
 
-class Dec06_1(task.StrTask):
+class dec06_1(task.StrTask):
 
     def findclosest(self, x, y, points):
         min_dist = None
@@ -65,7 +65,7 @@ class Dec06_1(task.StrTask):
         return max(counts.values())
         
 
-class Dec06_2(task.StrTask):
+class dec06_2(task.StrTask):
     def totaldistance(self, x, y, points):
         dist = 0
         for i in range(len(points)):

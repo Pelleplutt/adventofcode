@@ -2,7 +2,7 @@ import task
 import re
 import pprint
 
-class Dec03_1(task.StrTask):
+class dec03_1(task.StrTask):
     def run_list(self, data):
         plist = []
         msize = 0
@@ -42,7 +42,7 @@ class Dec03_1(task.StrTask):
         return overlaps
         
 
-class Dec03_2(task.StrTask):
+class dec03_2(task.StrTask):
     def run_list(self, data):
         plist = []
         msize = 0

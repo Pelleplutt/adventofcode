@@ -1,6 +1,6 @@
 import task
 
-class Dec08_1(task.StrTask):
+class dec08_1(task.StrTask):
     def parse_node(self, pos, data):
         child_count = data[pos]
         metadata_count = data[pos + 1]
@@ -23,7 +23,7 @@ class Dec08_1(task.StrTask):
         return metadata_sum
 
 
-class Dec08_2(task.StrTask):
+class dec08_2(task.StrTask):
     def parse_node(self, pos, data):
         child_count = data[pos]
         children = []

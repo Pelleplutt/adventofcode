@@ -1,7 +1,7 @@
 import task
 
-class DecXX_1(task.IntTask):
-#class DecXX_1(task.StrTask):
+class decXX_1(task.IntTask):
+#class decXX_1(task.StrTask):
     """
     """
     def run(self, line):
@@ -10,8 +10,8 @@ class DecXX_1(task.IntTask):
     def run_list(self, data):
         pass
 
-class DecXX_2(task.IntTask):
-#class DecXX_2(task.StrTask):
+class decXX_2(task.IntTask):
+#class decXX_2(task.StrTask):
     """
     """
     def run(self, line):

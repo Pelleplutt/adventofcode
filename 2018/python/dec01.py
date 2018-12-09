@@ -1,13 +1,13 @@
 import task
 
-class Dec01_1(task.IntTask):
+class dec01_1(task.IntTask):
     def run_list(self, data):
         s = 0
         for i in data:
             s += i
         return s
 
-class Dec01_2(task.IntTask):
+class dec01_2(task.IntTask):
     def run_list(self, data):
         s = 0
         slist = [0]

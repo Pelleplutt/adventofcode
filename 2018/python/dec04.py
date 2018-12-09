@@ -3,7 +3,7 @@ import re
 import pprint
 import sys
 
-class Dec04_1(task.StrTask):
+class dec04_1(task.StrTask):
     def run_list(self, data):
         data.sort()
         shifts = {}
@@ -47,7 +47,7 @@ class Dec04_1(task.StrTask):
                 max_slept_max_minute =slept_max_minute
         return max_slept_max_minute * max_id        
 
-class Dec04_2(task.StrTask):
+class dec04_2(task.StrTask):
     def run_list(self, data):
         data.sort()
         shifts = {}
