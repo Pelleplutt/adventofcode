@@ -1,5 +1,6 @@
-import task
+#!/usr/bin/env python3
 
+import task
 class decXX_1(task.IntTask):
 #class decXX_1(task.StrTask):
     """
