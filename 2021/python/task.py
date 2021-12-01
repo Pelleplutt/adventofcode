@@ -30,11 +30,15 @@ class TestData(object):
     def __init__(self, basename, in_int):
         self.basename = basename
         self.desc = os.path.split(basename)[1]
+        self.facit = None
         self.load(in_int)
 
     def load(self, in_int):
         self.input = self.loadfile(self.basename + '.in', in_int)
-        self.facit = self.loadfile(self.basename + '.out', False)
+        try:
+            self.facit = self.loadfile(self.basename + '.out', False)
+        except FileNotFoundError as e:
+            print("(No output found, facit is empty)")
 
     def loadfile(self, file, integers):
         lines = []
@@ -65,7 +69,10 @@ class TestData(object):
         if type(out) != list:
             out = [out]
 
-        if self.resultok(out, self.facit):
+        if self.facit is None:
+            echoresult(self.input, out)
+            print("{0} ?".format(self.desc))
+        elif self.resultok(out, self.facit):
             if echo:
                 echoresult(self.input, out)
             print("{0} OK".format(self.desc))
