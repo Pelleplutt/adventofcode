@@ -11,7 +11,7 @@ def echoresult(input, result, maxlines=10):
                 if maxlines is not None and idx > maxlines:
                     print("...")
                     break
-                print("       ", line)
+                print("      {0}".format(line))
         else:
             print(input)
 
@@ -22,7 +22,7 @@ def echoresult(input, result, maxlines=10):
             if maxlines is not None and idx > maxlines:
                 print("...")
                 break
-            print("       " + line)
+            print("      {0}".format(line))
     else:
         print(result)
 
