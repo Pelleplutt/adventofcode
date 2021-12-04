@@ -1,19 +1,18 @@
 import glob
 import os.path
-import sys
 
-def echoresult(input, result, maxlines=10):
-    if input is not None:
+def echoresult(indata, result, maxlines=10):
+    if indata is not None:
         print("IN    : ", end='')
-        if type(input) == list:
-            print(input[0])
-            for idx, line in enumerate(input[1:]):
+        if type(indata) == list:
+            print(indata[0])
+            for idx, line in enumerate(indata[1:]):
                 if maxlines is not None and idx > maxlines:
                     print("...")
                     break
                 print("      {0}".format(line))
         else:
-            print(input)
+            print(indata)
 
     print("RESULT: ", end='')
     if type(result) == list:
@@ -37,7 +36,7 @@ class TestData(object):
         self.input = self.loadfile(self.basename + '.in', in_int)
         try:
             self.facit = self.loadfile(self.basename + '.out', False)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             print("(No output found, facit is empty)")
 
     def loadfile(self, file, integers):
