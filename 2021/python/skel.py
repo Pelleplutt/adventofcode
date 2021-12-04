@@ -21,7 +21,8 @@ class decXX_2(task.IntTask):
     def run_list(self, data):
         pass
 
-
 if __name__ == "__main__":
-    decXX_1().runtests()
-    decXX_2().runtests()
+    #decXX_1().runtests()
+    decXX_1().runtest('1')
+    #decXX_2().runtests()
+    decXX_2().runtest('1')
