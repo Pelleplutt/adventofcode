@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 import task
-class decXX_1(task.IntTask):
-#class decXX_1(task.StrTask):
+import sys
+
+class DecXXa(task.StrTask):
+#class DecXXa(task.IntTask):
     """
     """
     def run(self, line):
@@ -11,8 +13,8 @@ class decXX_1(task.IntTask):
     def run_list(self, data):
         pass
 
-class decXX_2(task.IntTask):
-#class decXX_2(task.StrTask):
+class DecXXb(task.StrTask):
+#class DecXXb(task.IntTask):
     """
     """
     def run(self, line):
@@ -22,7 +24,9 @@ class decXX_2(task.IntTask):
         pass
 
 if __name__ == "__main__":
-    #decXX_1().runtests()
-    decXX_1().runtest('1')
-    #decXX_2().runtests()
-    decXX_2().runtest('1')
+    if len(sys.argv) > 1:
+        DecXXa().run_tests_from_commandline()
+        DecXXb().run_tests_from_commandline()
+    else:
+        DecXXa().runtests()
+        DecXXb().runtests()

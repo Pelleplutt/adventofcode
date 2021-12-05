@@ -1,5 +1,6 @@
 import glob
 import os.path
+import sys
 
 def echoresult(indata, result, maxlines=10):
     if indata is not None:
@@ -101,6 +102,12 @@ class Task(object):
     def runtests(self, echo=False):
         print("{0}:".format(self.desc))
         for test in self.tests():
+            test.run(self, echo)
+
+    def run_tests_from_commandline(self, echo=False):
+        print("{0}:".format(self.desc))
+        for name in sys.argv[1:]:
+            test = TestData(os.path.join(self.testpath, name), self.in_int)
             test.run(self, echo)
 
     def tests(self):
