@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import task
+import sys
 
 class Line(object):
     def __init__(self, x1, y1, x2, y2):
@@ -30,7 +31,7 @@ class Line(object):
             if x == self.x2 and y == self.y2:
                 break
 
-class dec05_1(task.StrTask):
+class Dec05a(task.StrTask):
     """
     """
     def run_list(self, data):
@@ -59,7 +60,7 @@ class dec05_1(task.StrTask):
         return count
         
 
-class dec05_2(task.StrTask):
+class Dec05b(task.StrTask):
     """
     """
 
@@ -87,5 +88,9 @@ class dec05_2(task.StrTask):
 
 
 if __name__ == "__main__":
-    dec05_1().runtests()
-    dec05_2().runtests()
+    if len(sys.argv) > 1:
+        Dec05a().run_tests_from_commandline()
+        Dec05b().run_tests_from_commandline()
+    else:
+        Dec05a().runtests()
+        Dec05b().runtests()
