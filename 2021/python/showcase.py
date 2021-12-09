@@ -1,78 +1,78 @@
 #!/usr/bin/env python3
 
-from dec01 import dec01_1, dec01_2
-# from dec02 import dec02_1, dec02_2
-# from dec03 import dec03_1, dec03_2
-# from dec04 import dec04_1, dec04_2
-# from dec05 import dec05_1, dec05_2
-# from dec06 import dec06_1, dec06_2
-# from dec07 import dec07_1, dec07_2
-# from dec08 import dec08_1, dec08_2
-# from dec09 import dec09_1, dec09_2
-# from dec10 import dec10_1, dec10_2
-# from dec11 import dec11_1, dec11_2
-# from dec12 import dec12_1, dec12_2
-# from dec13 import dec13_1, dec13_2
-# from dec14 import dec14_1, dec14_2
-# from dec15 import dec15_1, dec15_2
-# from dec16 import dec16_1, dec16_2
-# from dec17 import dec17_1, dec17_2
-# from dec18 import dec18_1, dec18_2
-# from dec19 import dec19_1, dec19_2
-# from dec20 import dec20_1, dec20_2
-# from dec21 import dec21_1, dec21_2
-# from dec22 import dec22_1, dec22_2
-# from dec23 import dec23_1, dec23_2
-# from dec24 import dec24_1, dec24_2
-# from dec25 import dec25_1, dec25_2
+from dec01 import Dec01a, Dec01b
+from dec02 import Dec02a, Dec02b
+from dec03 import Dec03a, Dec03b
+from dec04 import Dec04a, Dec04b
+from dec05 import Dec05a, Dec05b
+from dec06 import Dec06a, Dec06b
+from dec07 import Dec07a, Dec07b
+from dec08 import Dec08a, Dec08b
+from dec09 import Dec09a, Dec09b
+# from dec10 import Dec10a, Dec10b
+# from dec11 import Dec11a, Dec11b
+# from dec12 import Dec12a, Dec12b
+# from dec13 import Dec13a, Dec13b
+# from dec14 import Dec14a, Dec14b
+# from dec15 import Dec15a, Dec15b
+# from dec16 import Dec16a, Dec16b
+# from dec17 import Dec17a, Dec17b
+# from dec18 import Dec18a, Dec18b
+# from dec19 import Dec19a, Dec19b
+# from dec20 import Dec20a, Dec20b
+# from dec21 import Dec21a, Dec21b
+# from dec22 import Dec22a, Dec22b
+# from dec23 import Dec23a, Dec23b
+# from dec24 import Dec24a, Dec24b
+# from dec25 import Dec25a, Dec25b
 
-dec01_1().runtest('challenge', echo=True)
-dec01_2().runtest('challenge', echo=True)
-# dec02_1().runtest('challenge', echo=True)
-# dec02_2().runtest('challenge', echo=True)
-# dec03_1().runtest('challenge', echo=True)
-# dec03_2().runtest('challenge', echo=True)
-# dec04_1().runtest('challenge', echo=True)
-# dec04_2().runtest('challenge', echo=True)
-# dec05_1().runtest('challenge', echo=True)
-# dec05_2().runtest('challenge', echo=True)
-# dec06_1().runtest('challenge', echo=True)
-# dec06_2().runtest('challenge', echo=True)
-# dec07_1().runtest('challenge', echo=True)
-# dec07_2().runtest('challenge', echo=True)
-# dec08_1().runtest('challenge', echo=True)
-# dec08_2().runtest('challenge', echo=True)
-# dec09_1().runtest('challenge', echo=True)
-# dec09_2().runtest('challenge', echo=True)
-# dec10_1().runtest('challenge', echo=True)
-# dec10_2().runtest('challenge', echo=True)
-# dec11_1().runtest('challenge', echo=True)
-# dec11_2().runtest('challenge', echo=True)
-# dec12_1().runtest('challenge', echo=True)
-# dec12_2().runtest('challenge', echo=True)
-# dec13_1().runtest('challenge', echo=True)
-# dec13_2().runtest('challenge', echo=True)
-# dec14_1().runtest('challenge', echo=True)
-# dec14_2().runtest('challenge', echo=True)
-# dec15_1().runtest('challenge', echo=True)
-# dec15_2().runtest('challenge', echo=True)
-# dec16_1().runtest('challenge', echo=True)
-# dec16_2().runtest('challenge', echo=True)
-# dec17_1().runtest('challenge', echo=True)
-# dec17_2().runtest('challenge', echo=True)
-# dec18_1().runtest('challenge', echo=True)
-# dec18_2().runtest('challenge', echo=True)
-# dec19_1().runtest('challenge', echo=True)
-# dec19_2().runtest('challenge', echo=True)
-# dec20_1().runtest('challenge', echo=True)
-# dec20_2().runtest('challenge', echo=True)
-# dec21_1().runtest('challenge', echo=True)
-# dec21_2().runtest('challenge', echo=True)
-# dec22_1().runtest('challenge', echo=True)
-# dec22_2().runtest('challenge', echo=True)
-# dec23_1().runtest('challenge', echo=True)
-# dec23_2().runtest('challenge', echo=True)
-# dec24_1().runtest('challenge', echo=True)
-# dec24_2().runtest('challenge', echo=True)
-# dec25_1().runtest('challenge', echo=True)
-# dec25_2().runtest('challenge', echo=True)
+Dec01a().runtest('challenge', echo=True)
+Dec01b().runtest('challenge', echo=True)
+Dec02a().runtest('challenge', echo=True)
+Dec02b().runtest('challenge', echo=True)
+Dec03a().runtest('challenge', echo=True)
+Dec03b().runtest('challenge', echo=True)
+Dec04a().runtest('challenge', echo=True)
+Dec04b().runtest('challenge', echo=True)
+Dec05a().runtest('challenge', echo=True)
+Dec05b().runtest('challenge', echo=True)
+Dec06a().runtest('challenge', echo=True)
+Dec06b().runtest('challenge', echo=True)
+Dec07a().runtest('challenge', echo=True)
+Dec07b().runtest('challenge', echo=True)
+Dec08a().runtest('challenge', echo=True)
+Dec08b().runtest('challenge', echo=True)
+Dec09a().runtest('challenge', echo=True)
+Dec09b().runtest('challenge', echo=True)
+# Dec10a().runtest('challenge', echo=True)
+# Dec10b().runtest('challenge', echo=True)
+# Dec11a().runtest('challenge', echo=True)
+# Dec11b().runtest('challenge', echo=True)
+# Dec12a().runtest('challenge', echo=True)
+# Dec12b().runtest('challenge', echo=True)
+# Dec13a().runtest('challenge', echo=True)
+# Dec13b().runtest('challenge', echo=True)
+# Dec14a().runtest('challenge', echo=True)
+# Dec14b().runtest('challenge', echo=True)
+# Dec15a().runtest('challenge', echo=True)
+# Dec15b().runtest('challenge', echo=True)
+# Dec16a().runtest('challenge', echo=True)
+# Dec16b().runtest('challenge', echo=True)
+# Dec17a().runtest('challenge', echo=True)
+# Dec17b().runtest('challenge', echo=True)
+# Dec18a().runtest('challenge', echo=True)
+# Dec18b().runtest('challenge', echo=True)
+# Dec19a().runtest('challenge', echo=True)
+# Dec19b().runtest('challenge', echo=True)
+# Dec20a().runtest('challenge', echo=True)
+# Dec20b().runtest('challenge', echo=True)
+# Dec21a().runtest('challenge', echo=True)
+# Dec21b().runtest('challenge', echo=True)
+# Dec22a().runtest('challenge', echo=True)
+# Dec22b().runtest('challenge', echo=True)
+# Dec23a().runtest('challenge', echo=True)
+# Dec23b().runtest('challenge', echo=True)
+# Dec24a().runtest('challenge', echo=True)
+# Dec24b().runtest('challenge', echo=True)
+# Dec25a().runtest('challenge', echo=True)
+# Dec25b().runtest('challenge', echo=True)
