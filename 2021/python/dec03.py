@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import pprint
-
 import sys
 import task
 
@@ -40,7 +38,7 @@ class Dec03b(task.StrTask):
             elif count_ones == 0:
                 filter_c = '1'
         elif count_ones < 0:
-                filter_c = '1'
+            filter_c = '1'
 
         return list(filter(lambda s: s[pos] == filter_c, data))
 
