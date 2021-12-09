@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import task
+import pprint
 import sys
+import task
 
 class DecXXa(task.StrTask):
 #class DecXXa(task.IntTask):
