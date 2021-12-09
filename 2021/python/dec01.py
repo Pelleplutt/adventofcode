@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+import sys
 import task
 
-class dec01_1(task.IntTask):
+class Dec01a(task.IntTask):
     def run_list(self, data):
         incr = 0
         for (idx, d) in enumerate(data):
@@ -11,7 +12,7 @@ class dec01_1(task.IntTask):
 
         return incr
 
-class dec01_2(task.IntTask):
+class Dec01b(task.IntTask):
     def run_list(self, data):
         incr = 0
         for i in range(0, len(data) - 3):
@@ -21,5 +22,9 @@ class dec01_2(task.IntTask):
         return incr
 
 if __name__ == "__main__":
-    dec01_1().runtests()
-    dec01_2().runtests()
+    if len(sys.argv) > 1:
+        Dec01a().run_tests_from_commandline()
+        Dec01b().run_tests_from_commandline()
+    else:
+        Dec01a().runtests()
+        Dec01b().runtests()

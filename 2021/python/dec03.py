@@ -2,8 +2,10 @@
 
 import pprint
 
+import sys
 import task
-class dec03_1(task.StrTask):
+
+class Dec03a(task.StrTask):
     def run_list(self, data):
         gamma = 0        
         ones = [0] * len(data[0])
@@ -23,7 +25,7 @@ class dec03_1(task.StrTask):
 
         return gamma * epsilon        
 
-class dec03_2(task.StrTask):
+class Dec03b(task.StrTask):
     def filter_pos(self, most_common, pos, data):
         count_ones = 0
         for d in data:
@@ -60,5 +62,9 @@ class dec03_2(task.StrTask):
         return int(oxygen[0], 2) * int(co2[0], 2)
 
 if __name__ == "__main__":
-    dec03_1().runtests()
-    dec03_2().runtests()
+    if len(sys.argv) > 1:
+        Dec03a().run_tests_from_commandline()
+        Dec03b().run_tests_from_commandline()
+    else:
+        Dec03a().runtests()
+        Dec03b().runtests()

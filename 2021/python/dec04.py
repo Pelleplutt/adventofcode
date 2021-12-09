@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import task
 
 class Board(object):
@@ -35,7 +36,7 @@ class Board(object):
 
         return False
 
-class dec04_1(task.StrTask):
+class Dec04a(task.StrTask):
     def run_list(self, data):
         draws = map(int, data[0].split(','))
         boards = []
@@ -51,7 +52,7 @@ class dec04_1(task.StrTask):
                     return sum(unmarked) * draw
         return None
 
-class dec04_2(task.StrTask):
+class Dec04b(task.StrTask):
     def run_list(self, data):
         draws = map(int, data[0].split(','))
         boards = []
@@ -72,5 +73,9 @@ class dec04_2(task.StrTask):
         return None
 
 if __name__ == "__main__":
-    dec04_1().runtests()
-    dec04_2().runtests()
+    if len(sys.argv) > 1:
+        Dec04a().run_tests_from_commandline()
+        Dec04b().run_tests_from_commandline()
+    else:
+        Dec04a().runtests()
+        Dec04b().runtests()

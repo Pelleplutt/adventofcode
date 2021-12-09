@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
+import sys
 import task
-class dec02_1(task.StrTask):
+
+class Dec02a(task.StrTask):
     def run_list(self, data):
         horiz = 0
         depth = 0
@@ -19,7 +21,7 @@ class dec02_1(task.StrTask):
 
         return horiz * depth
         
-class dec02_2(task.StrTask):
+class Dec02b(task.StrTask):
     def run_list(self, data):
         horiz = 0
         depth = 0
@@ -40,5 +42,9 @@ class dec02_2(task.StrTask):
         return horiz * depth
 
 if __name__ == "__main__":
-    dec02_1().runtests()
-    dec02_2().runtests()
+    if len(sys.argv) > 1:
+        Dec02a().run_tests_from_commandline()
+        Dec02b().run_tests_from_commandline()
+    else:
+        Dec02a().runtests()
+        Dec02b().runtests()
