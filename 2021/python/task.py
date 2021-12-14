@@ -1,6 +1,7 @@
 import glob
 import os.path
 import sys
+import time
 
 def echoresult(indata, result, maxlines=10):
     if indata is not None:
@@ -11,7 +12,7 @@ def echoresult(indata, result, maxlines=10):
                 if maxlines is not None and idx > maxlines:
                     print("...")
                     break
-                print("      {0}".format(line))
+                print(f"      {line}")
         else:
             print(indata)
 
@@ -22,7 +23,7 @@ def echoresult(indata, result, maxlines=10):
             if maxlines is not None and idx > maxlines:
                 print("...")
                 break
-            print("      {0}".format(line))
+            print(f"      {line}")
     else:
         print(result)
 
@@ -61,28 +62,30 @@ class TestData(object):
 
 
     def run(self, task, echo=False):
+        t0 = time.time()
         if "run_list" in dir(task):
             out = task.run_list(self.input)
         else:
             out = task.run(self.input[0])
+        t1 = time.time()
 
         if type(out) != list:
             out = [out]
 
         if self.facit is None:
             echoresult(self.input, out)
-            print("{0} ?".format(self.desc))
+            print(f"{self.desc} ?")
         elif self.resultok(out, self.facit):
             if echo:
                 echoresult(self.input, out)
-            print("{0} OK".format(self.desc))
+            print(f"{self.desc} OK ({((t1 - t0) * 1000):.2f}ms)")
         else:
             echoresult(self.input, out)
             if len(self.facit):
-                print("{0} NOT OK, expected".format(self.desc))
+                print(f"{self.desc} NOT OK, expected")
                 echoresult(None, self.facit)
             else:
-                print("{0} NOT OK".format(self.desc))
+                print(f"{self.desc} NOT OK")
 
 
 class Task(object):
@@ -100,12 +103,12 @@ class Task(object):
         test.run(self, echo)
 
     def runtests(self, echo=False):
-        print("{0}:".format(self.desc))
+        print(f"{self.desc}:")
         for test in self.tests():
             test.run(self, echo)
 
     def run_tests_from_commandline(self, echo=False):
-        print("{0}:".format(self.desc))
+        print(f"{self.desc}:")
         for name in sys.argv[1:]:
             test = TestData(os.path.join(self.testpath, name), self.in_int)
             test.run(self, echo)
