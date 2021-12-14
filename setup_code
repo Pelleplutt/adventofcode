@@ -1,7 +1,11 @@
 #!/bin/sh
 
-year=$(date '+%Y')
-day=$(date '+%d')
+if [ -n "$1" ]; then
+    offset="-v${1}d"
+fi
+
+year=$(date $offset '+%Y')
+day=$(date $offset '+%d')
 
 if [ ! -f "${year}/python/dec${day}.py" ]; then
     cp -v "${year}/python/skel.py" "${year}/python/dec${day}.py"
