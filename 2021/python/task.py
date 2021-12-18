@@ -64,7 +64,7 @@ class TestData(object):
     def run(self, task, echo=False):
         t0 = time.time()
         if "run_list" in dir(task):
-            out = task.run_list(self.input)
+            out = task.run_list(self.input.copy())
         else:
             out = task.run(self.input[0])
         t1 = time.time()
