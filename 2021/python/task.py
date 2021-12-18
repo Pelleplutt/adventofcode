@@ -12,7 +12,7 @@ def echoresult(indata, result, maxlines=10):
                 if maxlines is not None and idx > maxlines:
                     print("...")
                     break
-                print(f"      {line}")
+                print(f"        {line}")
         else:
             print(indata)
 
