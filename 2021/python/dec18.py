@@ -1,49 +1,60 @@
 #!/usr/bin/env python3
 
-import json
 import math
 import sys
 import task
 
 def finddigitright(data, startindex):
-    digitlength = 1
     while startindex < len(data):
-        if data[startindex].isdigit():
-            while data[startindex + digitlength].isdigit():
-                digitlength += 1
-
-            return startindex, digitlength, \
-                   int(data[startindex:startindex + digitlength])
+        if type(data[startindex]) == int:
+            return startindex
         startindex += 1
-    return None, None, None
-
+    return None
 
 def finddigitleft(data, startindex):
-    digitlength = 1
     while startindex > 0:
-        if data[startindex].isdigit():
-            while data[startindex - digitlength].isdigit():
-                digitlength += 1
-            return startindex - digitlength + 1, digitlength, \
-                   int(data[startindex - digitlength + 1:startindex + 1])
+        if type(data[startindex]) == int:
+            return startindex
         startindex -= 1
-    return None, None, None
+    return None
 
-def getsnailfishmagnitude(data):
-    if isinstance(data[0], list):
-        leftmagnitude = getsnailfishmagnitude(data[0])
+def getsnailfishmagnitude(data, idx):
+    if data[idx] == '[':
+        leftmagnitude, idx = getsnailfishmagnitude(data, idx + 1)
     else:
-        leftmagnitude = data[0]
-    if isinstance(data[1], list):
-        rightmagnitude = getsnailfishmagnitude(data[1])
-    else:
-        rightmagnitude = data[1]
+        leftmagnitude = data[idx]
+        idx += 1
 
-    return leftmagnitude * 3 + rightmagnitude * 2
+    if data[idx] == '[':
+        rightmagnitude, idx = getsnailfishmagnitude(data, idx + 1)
+    else:
+        rightmagnitude = data[idx]
+        idx += 1
+    return leftmagnitude * 3 + rightmagnitude * 2, idx + 1
+
+def parsehomeworkstr(data):
+    homework, digitbuildup = [], ''
+    for idx, char in enumerate(data):
+        if char in ('[', ']'):
+            if digitbuildup:
+                homework.append(int(digitbuildup))
+                digitbuildup = ''
+            homework.append(char)
+        if char.isdigit():
+            digitbuildup += char
+        elif char == ',':
+            if digitbuildup:
+                homework.append(int(digitbuildup))
+                digitbuildup = ''
+    
+    return homework
 
 def addhomeworkpair(term1, term2):
+    if type(term1) == str:
+        term1 = parsehomeworkstr(term1)
+
     if term2 is not None:
-        homework = f"[{term1},{term2}]"
+        homework = ['['] + term1 + parsehomeworkstr(term2) + [']']
     else:
         homework = term1
 
@@ -57,41 +68,41 @@ def addhomeworkpair(term1, term2):
             elif char == ']':
                 nesteddepth -= 1
             elif nesteddepth > 4:
-                closingidx = homework.index(']', idx)
-                addleft, addright = homework[idx:homework.index(']', idx)].split(',')
 
-                rightdigitstart, rightdigitlength, rightdigit = finddigitright(homework, closingidx)
-                if rightdigitstart is not None:
-                    split = str(rightdigit + int(addright))
-                    homework = homework[:rightdigitstart] + split + homework[rightdigitstart + rightdigitlength:]
+                addleft, addright = homework[idx], homework[idx + 1]
 
-                homework = homework[:idx - 1] + '0' + homework[closingidx + 1:]
+                rightdigitidx = finddigitright(homework, idx + 2)
+                if rightdigitidx is not None:
+                    homework[rightdigitidx] += addright
+                del homework[idx - 1:idx + 3]
+                homework.insert(idx - 1, 0)
 
-                leftdigitstart, leftdigitlength, leftdigit = finddigitleft(homework, idx - 2)
-                if leftdigitstart is not None:
-                    split = str(leftdigit + int(addleft))
-                    homework = homework[:leftdigitstart] + split + homework[leftdigitstart + leftdigitlength:]
-
+                leftdigitidx = finddigitleft(homework, idx - 2)
+                if leftdigitidx is not None:
+                    homework[leftdigitidx] += addleft
+                
                 isexploaded = True
                 break
 
         if not isexploaded:
             lastnumberidx = 0
             while True:
-                rightdigitstart, rightdigitlength, rightdigit = finddigitright(homework, lastnumberidx)
-                if rightdigit is None:
+                rightdigitidx = finddigitright(homework, lastnumberidx)
+                if rightdigitidx is None:
                     break
-                if rightdigit >= 10:
-                    split = f"[{math.floor(rightdigit / 2)},{math.ceil(rightdigit / 2)}]"
-                    homework = homework[:rightdigitstart] + split + homework[rightdigitstart + rightdigitlength:]
+                if homework[rightdigitidx] >= 10:
+                    homework = homework[:rightdigitidx] + \
+                        ['[', math.floor(homework[rightdigitidx] / 2), math.ceil(homework[rightdigitidx] / 2), ']' ] +\
+                        homework[rightdigitidx + 1:]
+
                     issplit = True
                     break
-                lastnumberidx = rightdigitstart + rightdigitlength
+                lastnumberidx = rightdigitidx + 1
 
         if not isexploaded and not issplit:
             break
 
-    return getsnailfishmagnitude(json.loads(homework)), homework
+    return getsnailfishmagnitude(homework, 1)[0], homework
 
 
 class Dec18a(task.StrTask):
@@ -107,8 +118,6 @@ class Dec18a(task.StrTask):
                 break
 
         return magnitude
-
-
 
 class Dec18b(task.StrTask):
     """
