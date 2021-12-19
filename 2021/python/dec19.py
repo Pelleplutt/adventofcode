@@ -38,6 +38,17 @@ def findscannerrelativepositions(scannerdata):
     found= set([0])
     notfound = set(range(1, len(scannerdata)))
 
+    transformedscannerdata = []
+    for scanner in range(len(scannerdata)):
+        transformedscannerdata.append([])
+        for transformation in TRANSFORMATIONS:
+            transformed = []
+            for beacon in scannerdata[scanner]:
+                transformed.append([beacon[transformation[0][0]] * transformation[0][1],
+                                    beacon[transformation[1][0]] * transformation[1][1],
+                                    beacon[transformation[2][0]] * transformation[2][1]])
+            transformedscannerdata[-1].append(transformed)
+
     while notfound:
         scanner1 = found.pop()
 
@@ -48,22 +59,14 @@ def findscannerrelativepositions(scannerdata):
         found_now = set()
         for scanner2 in notfound:
             foundoverlap = False
-            for transformation in TRANSFORMATIONS:
-                transformed = []
-                for beacon in scannerdata[scanner2]:
-                    transformed.append([beacon[transformation[0][0]] * transformation[0][1],
-                                        beacon[transformation[1][0]] * transformation[1][1],
-                                        beacon[transformation[2][0]] * transformation[2][1]])
-
+            for transformed in transformedscannerdata[scanner2]:
                 for beacon1 in scannerdata[scanner1]:
                     for beacon2 in transformed:
-                        x = beacon1[0] - beacon2[0]
-                        y = beacon1[1] - beacon2[1]
-                        z = beacon1[2] - beacon2[2]
+                        x, y, z = beacon1[0] - beacon2[0], beacon1[1] - beacon2[1], beacon1[2] - beacon2[2]
 
                         scanner2beacons = set()
-                        for b in transformed:
-                            scanner2beacons.add(tuple([b[0] + x, b[1] + y, b[2] + z]))
+                        for beacon in transformed:
+                            scanner2beacons.add(tuple([beacon[0] + x, beacon[1] + y, beacon[2] + z]))
 
                         if len(scanner2beacons.intersection(scanner1beacons)) >= 12:
                             found_now.add(scanner2)
