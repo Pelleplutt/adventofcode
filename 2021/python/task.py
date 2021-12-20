@@ -3,30 +3,6 @@ import os.path
 import sys
 import time
 
-def echoresult(indata, result, maxlines=10):
-    if indata is not None:
-        print("IN    : ", end='')
-        if type(indata) == list:
-            print(indata[0])
-            for idx, line in enumerate(indata[1:]):
-                if maxlines is not None and idx > maxlines:
-                    print("...")
-                    break
-                print(f"        {line}")
-        else:
-            print(indata)
-
-    print("RESULT: ", end='')
-    if type(result) == list:
-        print(result[0])
-        for idx, line in enumerate(result[1:]):
-            if maxlines is not None and idx > maxlines:
-                print("...")
-                break
-            print(f"      {line}")
-    else:
-        print(result)
-
 class TestData(object):
     def __init__(self, basename, in_int):
         self.basename = basename
@@ -60,7 +36,6 @@ class TestData(object):
                 return False
         return True
 
-
     def run(self, task, echo=False):
         t0 = time.time()
         if "run_list" in dir(task):
@@ -73,20 +48,43 @@ class TestData(object):
             out = [out]
 
         if self.facit is None:
-            echoresult(self.input, out)
+            self.echoresult(self.input, out)
             print(f"{self.desc} ?")
         elif self.resultok(out, self.facit):
             if echo:
-                echoresult(self.input, out)
+                self.echoresult(self.input, out)
             print(f"{self.desc} OK ({((t1 - t0) * 1000):.2f}ms)")
         else:
-            echoresult(self.input, out)
+            self.echoresult(self.input, out)
             if len(self.facit):
                 print(f"{self.desc} NOT OK, expected")
-                echoresult(None, self.facit)
+                self.echoresult(None, self.facit)
             else:
                 print(f"{self.desc} NOT OK")
 
+    def echoresult(self, indata, result, maxlines=10):
+        if indata is not None:
+            print("IN    : ", end='')
+            if type(indata) == list:
+                print(indata[0])
+                for idx, line in enumerate(indata[1:]):
+                    if maxlines is not None and idx > maxlines:
+                        print("...")
+                        break
+                    print(f"        {line}")
+            else:
+                print(indata)
+
+        print("RESULT: ", end='')
+        if type(result) == list:
+            print(result[0])
+            for idx, line in enumerate(result[1:]):
+                if maxlines is not None and idx > maxlines:
+                    print("...")
+                    break
+                print(f"      {line}")
+        else:
+            print(result)
 
 class Task(object):
     def __init__(self):
