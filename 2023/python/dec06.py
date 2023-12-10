@@ -27,7 +27,6 @@ class Dec06a(task.StrTask):
 
 
 class Dec06b(task.StrTask):
-#class Dec06b(task.IntTask):
     """
     """
     def run_list(self, data):
