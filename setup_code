@@ -7,16 +7,20 @@ fi
 year=$(date $offset '+%Y')
 day=$(date $offset '+%d')
 
+    
 if [ ! -f "${year}/python/dec${day}.py" ]; then
-    cp -v "${year}/python/skel.py" "${year}/python/dec${day}.py"
+    if [ ! -d "${year}/python/" ]; then
+        mkdir "${year}/python/"
+    fi
+    cp -v "base/skel.py" "${year}/python/dec${day}.py"
     perl -p -i -e "s/XX/${day}/g" "${year}/python/dec${day}.py"
 fi
 
 if [ ! -d "${year}/tests/Dec${day}a" ]; then
-    mkdir -v "${year}/tests/Dec${day}a"
+    mkdir -vp "${year}/tests/Dec${day}a"
     touch "${year}/tests/Dec${day}a/1.in" "${year}/tests/Dec${day}a/1.out" "${year}/tests/Dec${day}a/challenge.in"
 fi
 if [ ! -d "${year}/tests/Dec${day}b" ]; then
-    mkdir -v "${year}/tests/Dec${day}b"
+    mkdir -vp "${year}/tests/Dec${day}b"
     touch "${year}/tests/Dec${day}b/1.in" "${year}/tests/Dec${day}b/1.out" "${year}/tests/Dec${day}b/challenge.in"
 fi
