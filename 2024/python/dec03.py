@@ -24,7 +24,6 @@ class Dec03b(task.StrTask):
             matches = re.findall(r"(mul|do|don't)\(((\d{1,3}),(\d{1,3}))?\)", s)
             for m in matches:
                 op, nop, t1, t2 = m
-                print(f"match {op}({t1},{t2}) {enable}")
                 if op == "do":
                     enable = True
                 elif op == "don't":
