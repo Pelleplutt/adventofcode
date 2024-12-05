@@ -4,7 +4,7 @@ import pprint
 import sys
 import task
 
-class Dec05a(task.StrTask):
+class Dec05(task.Task):
     def _valid(self, update):
         for ndx, num in enumerate(update):
             if self.rules.get(num, set()).intersection(set(update[:ndx])):
@@ -12,10 +12,10 @@ class Dec05a(task.StrTask):
 
         return True
 
-    def run_list(self, data):
+    def parse(self, rawdata):
         self.rules = {}
         updates = []
-        for row in data:
+        for row in rawdata:
             if '|' in row:
                 l, r = row.split('|')
                 l = int(l)
@@ -26,36 +26,18 @@ class Dec05a(task.StrTask):
             elif ',' in row:
                 updates.append(list(map(lambda x: int(x), row.split(','))))
 
+        return updates
+
+class Dec05a(Dec05):
+    def run(self, updates):
         sum = 0
         for update in updates:
             if self._valid(update):
                 sum += update[int(len(update) / 2)]
         return sum
 
-               
-
-class Dec05b(task.StrTask):
-    def _valid(self, update):
-        for ndx, num in enumerate(update):
-            if self.rules.get(num, set()).intersection(set(update[:ndx])):
-                return False
-
-        return True
-
-    def run_list(self, data):
-        self.rules = {}
-        updates = []
-        for row in data:
-            if '|' in row:
-                l, r = row.split('|')
-                l = int(l)
-                if self.rules.get(l) is not None:
-                    self.rules[l].add(int(r))
-                else:
-                    self.rules[l] = set([int(r)])
-            elif ',' in row:
-                updates.append(list(map(lambda x: int(x), row.split(','))))
-
+class Dec05b(Dec05):
+    def run(self, updates):
         sum = 0
         for update in updates:
             valid = self._valid(update)
@@ -86,8 +68,8 @@ class Dec05b(task.StrTask):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        Dec05a().run_tests_from_commandline()
-        Dec05b().run_tests_from_commandline()
+        Dec05a().run_specific_tests(sys.argv[1:])
+        Dec05b().run_specific_tests(sys.argv[1:])
     else:
         Dec05a().runtests()
         Dec05b().runtests()

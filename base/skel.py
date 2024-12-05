@@ -4,30 +4,22 @@ import pprint
 import sys
 import task
 
-class DecXXa(task.StrTask):
-#class DecXXa(task.IntTask):
-    """
-    """
-    def run(self, line):
+class DecXX(task.Task):
+    def parse(self, rawdata):
         pass
 
-    def run_list(self, data):
+class DecXXa(DecXX):
+    def run(self, data):
         pass
 
-class DecXXb(task.StrTask):
-#class DecXXb(task.IntTask):
-    """
-    """
-    def run(self, line):
-        pass
-
-    def run_list(self, data):
+class DecXXb(DecXX):
+    def run(self, data):
         pass
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        DecXXa().run_tests_from_commandline()
-        DecXXb().run_tests_from_commandline()
+        DecXXa().run_specific_tests(sys.argv[1:])
+        DecXXb().run_specific_tests(sys.argv[1:])
     else:
         DecXXa().runtests()
         DecXXb().runtests()

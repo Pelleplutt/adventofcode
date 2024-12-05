@@ -5,118 +5,177 @@ import sys
 import time
 
 class TestData(object):
-    def __init__(self, basename, in_int):
+    def __init__(self, basename):
         self.basename = basename
+        self.input_file = self.basename + '.in'
+        self.output_file = self.basename + '.out'
         self.desc = os.path.split(basename)[1]
         self.facit = None
         self.input = None
-        self.load(in_int)
+        self.load()
 
-    def load(self, in_int):
+    def load(self):
         try:
-            if os.stat(self.basename + '.in').st_size > 0:
-                self.input = self.loadfile(self.basename + '.in', in_int)
-            else:
-                print("(No input found, empty file)")
+            if os.stat(self.input_file).st_size > 0:
+                self.input = self._loadfile(self.input_file)
         except FileNotFoundError:
             raise AssertionError("No input found, file does not exist") from None
 
-        if self.input:
+        if self.input and os.stat(self.output_file).st_size > 0:
             try:
-                self.facit = self.loadfile(self.basename + '.out', False)
+                self.facit = self._loadfile(self.output_file)
             except FileNotFoundError:
-                print("(No output found, facit does not exist)")
+                pass
 
-    def loadfile(self, file, integers):
+    def _loadfile(self, file):
         lines = []
         for line in open(file, 'r'):
-            if integers:
-                lines.append(int(line))
-            else:
-                lines.append(line.rstrip('\r\n'))
+            lines.append(line.rstrip('\r\n'))
         return lines
 
-    def resultok(self, result, facit):
-        if len(result) != len(facit):
-            return False
-        for idx, line in enumerate(facit):
-            if type(result[idx]) == int:
-                line = int(line)
-            if line != result[idx]:
+    def run(self, task, echo=False):
+        echoresult = True
+
+        if self.input:
+            t0 = time.time()
+            indata = task.parse(self.input.copy())
+            out = task.run(indata)
+            t1 = time.time()
+
+            if self.facit is None:
+                status = '?'
+            elif self._resultok(out, self.facit):
+                status = 'OK'
+                echoresult = False
+            else:
+                status = 'NOT OK'
+                echoresult = True
+        else:
+            status = 'EMPTY'
+            echoresult = False
+            t0, t1 = 0, 0
+
+
+        print(f" - {self.desc} {status} ({((t1 - t0) * 1000):.2f}ms)")
+        if echoresult:
+            echo = self._renderresult(out, self.facit)
+            for e in echo:
+                print('   ', e)
+
+            print()
+
+    def _resultok(self, result, facit):
+        if type(result) == list:
+            if len(result) != len(facit):
                 return False
+            for idx, line in enumerate(facit):
+                if type(result[idx]) == int:
+                    if not line.isnumeric():
+                        return False
+                    line = int(line)
+                if line != result[idx]:
+                    return False
+        else:
+            if len(facit) > 1:
+                return False
+            f = facit[0]
+            if type(result) == int:
+                if not f.isnumeric():
+                    return False
+                f = int(f)
+            if result != f:
+                return False
+
         return True
 
-    def run(self, task, echo=False):
-        t0 = time.time()
-        if "run_list" in dir(task):
-            out = task.run_list(self.input.copy())
-        else:
-            out = task.run(self.input[0])
-        t1 = time.time()
-
-        if type(out) != list:
-            out = [out]
-
-        if self.facit is None:
-            self.echoresult(self.input, out)
-            print(f"{self.desc} ?")
-        elif self.resultok(out, self.facit):
-            if echo:
-                self.echoresult(self.input, out)
-            print(f"{self.desc} OK ({((t1 - t0) * 1000):.2f}ms)")
-        else:
-            self.echoresult(self.input, out)
-            if len(self.facit):
-                print(f"{self.desc} NOT OK, expected")
-                self.echoresult(None, self.facit)
+    def _renderresult(self, out, facit, maxlines=10):
+        echo = []
+        if type(out) == list:
+            echo = self._renderresulttable(['Result', 'Expected'], [out, facit], maxcolwidth=40, maxlines=maxlines)
+        elif out is None:
+            echo.append(f"Result  : None")
+            if facit is None:
+                echo.append(f"Expected: None")
             else:
-                print(f"{self.desc} NOT OK")
-
-    def echoresult(self, indata, result, maxlines=10):
-        if indata is not None:
-            print("IN    : ", end='')
-            if type(indata) == list:
-                print(indata[0])
-                for idx, line in enumerate(indata[1:]):
-                    if maxlines is not None and idx > maxlines:
-                        print("...")
-                        break
-                    print(f"        {self.shorten(line, 128)}")
-            else:
-                print(self.shorten(indata, 256))
-
-        print("RESULT: ", end='')
-        if type(result) == list:
-            print(result[0])
-            for idx, line in enumerate(result[1:]):
-                if maxlines is not None and idx > maxlines:
-                    print("...")
-                    break
-                print(f"      {line}")
+                if len(facit) > 1:
+                    echo = self._renderresulttable(['Result', 'Expected'], [[out], facit], maxcolwidth=40, maxlines=maxlines)
+                else:
+                    echo.append(f"Expected: {facit[0]}")
         else:
-            print(result)
+            if len(facit) > 1:
+                echo = self._renderresulttable(['Result', 'Expected'], [[out], facit], maxcolwidth=40, maxlines=maxlines)
+            else:
+                echo.append(f"Result  : {out}")
+                echo.append(f"Expected: {facit[0]}")
+        return echo
 
-    def shorten(self, s, max=64):
+    def _shorten(self, s, max=64):
         if len(s) < max:
             return s
         if max < 3:
             return s[:max]
         return s[:(max - 3)] + '...'
+
+    def _renderresulttable(self, headers, columns, maxcolwidth=40, maxlines=None):
+        echo = []
+        colwidhts = []
+        for i, col in enumerate(columns):
+            cw = max(map(lambda x: len(str(x)) if x else 0, col))
+            cw = max(cw, len(headers[i]))
+            if maxcolwidth:
+                cw = min(cw, maxcolwidth)
+            
+            colwidhts.append(cw)
+
+
+        line = ''
+        for i, head in enumerate(headers):
+            cw = colwidhts[i]
+            line += f"| {head.center(cw)} "
+        echo.append(line + '|')
         
+        line = ''
+        for i, head in enumerate(headers):
+            cw = colwidhts[i]
+            line += f"+-{'-' * cw}-"
+        echo.append(line + '+')
+
+        row = 0
+        while True:
+            exhausted = True
+            line = ''
+            for i, head in enumerate(headers):
+                cw = colwidhts[i]
+                try:
+                    s = str(columns[i][row]).ljust(cw)
+                    line += f"| {s} "
+                    exhausted = False
+                except IndexError:
+                    line += f"| {''.ljust(cw)} "
+            if exhausted:
+                break
+
+            echo.append(line + '|')
+            row += 1
+            if row > maxlines:
+                break
+
+        line = ''
+        for i, head in enumerate(headers):
+            cw = colwidhts[i]
+            line += f"+-{'-' * cw}-"
+        echo.append(line + '+')
+        return echo
+
 
 
 class Task(object):
     def __init__(self):
         self.testpath = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'tests', self.__class__.__name__)
         self.desc = self.__class__.__name__
-        self.in_int = False
-        self.init()
-
-    def init(self):
-        pass
 
     def runtest(self, name, echo=False):
-        test = TestData(os.path.join(self.testpath, name), self.in_int)
+        test = TestData(os.path.join(self.testpath, name))
         test.run(self, echo)
 
     def runtests(self, echo=False):
@@ -124,26 +183,19 @@ class Task(object):
         for test in self.tests():
             test.run(self, echo)
 
-    def run_tests_from_commandline(self, echo=False):
+    def run_specific_tests(self, tests, echo=False):
         print(f"{self.desc}:")
-        for name in sys.argv[1:]:
-            test = TestData(os.path.join(self.testpath, name), self.in_int)
+        for name in tests:
+            test = TestData(os.path.join(self.testpath, name))
             test.run(self, echo)
 
     def tests(self):
         for fil in sorted(glob.glob(os.path.join(self.testpath, '*.in'))):
-            yield TestData(os.path.splitext(fil)[0], self.in_int)
+            yield TestData(os.path.splitext(fil)[0])
 
-    # implement either
-    # def run(self, line)
-    # or
-    # def run_list(self, data)
+    # implement these ########################################################
+    def parse(self, data):
+        raise NotImplementedError("Missing parse implementation")
 
-
-class IntTask(Task):
-    def init(self):
-        self.in_int = True
-
-
-class StrTask(Task):
-    pass
+    def run(self, data):
+        raise NotImplementedError("Missing run implementation")

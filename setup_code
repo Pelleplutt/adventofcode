@@ -18,9 +18,9 @@ fi
 
 if [ ! -d "${year}/tests/Dec${day}a" ]; then
     mkdir -vp "${year}/tests/Dec${day}a"
-    touch "${year}/tests/Dec${day}a/1.in" "${year}/tests/Dec${day}a/1.out" "${year}/tests/Dec${day}a/challenge.in"
+    touch "${year}/tests/Dec${day}a/1.in" "${year}/tests/Dec${day}a/1.out" "${year}/tests/Dec${day}a/challenge.in" "${year}/tests/Dec${day}a/challenge.out"
 fi
 if [ ! -d "${year}/tests/Dec${day}b" ]; then
     mkdir -vp "${year}/tests/Dec${day}b"
-    touch "${year}/tests/Dec${day}b/1.in" "${year}/tests/Dec${day}b/1.out" "${year}/tests/Dec${day}b/challenge.in"
+    touch "${year}/tests/Dec${day}b/1.in" "${year}/tests/Dec${day}b/1.out" "${year}/tests/Dec${day}b/challenge.in" "${year}/tests/Dec${day}b/challenge.out"
 fi
