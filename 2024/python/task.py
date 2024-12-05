@@ -36,11 +36,15 @@ class TestData(object):
     def run(self, task, echo=False):
         echoresult = True
 
+        extra = ''
         if self.input:
             t0 = time.time()
             indata = task.parse(self.input.copy())
-            out = task.run(indata)
             t1 = time.time()
+            out = task.run(indata)
+            t2 = time.time()
+
+            extra = f" ({((t1 - t0) * 1000):.2f} + {((t2 - t1) * 1000):.2f}ms)"
 
             if self.facit is None:
                 status = '?'
@@ -56,7 +60,7 @@ class TestData(object):
             t0, t1 = 0, 0
 
 
-        print(f" - {self.desc} {status} ({((t1 - t0) * 1000):.2f}ms)")
+        print(f" - {self.desc} {status}{extra}")
         if echoresult:
             echo = self._renderresult(out, self.facit)
             for e in echo:
