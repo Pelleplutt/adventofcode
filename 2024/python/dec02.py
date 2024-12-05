@@ -4,8 +4,8 @@ import pprint
 import sys
 import task
 
-class Dec02a(task.StrTask):
-    def is_safe(self, nums):
+class Dec02(task.Task):
+    def _is_safe(self, nums):
         diffs = [nums[i] - nums[i - 1] for i in range(1, len(nums))]
 
         for n in diffs:
@@ -13,33 +13,26 @@ class Dec02a(task.StrTask):
                 return False
         return True
 
-    def run_list(self, data):
+class Dec02a(Dec02):
+    def run(self, data):
         count = 0
         for row in data:
             nums = list(map(lambda x: int(x), row.split()))
-            if self.is_safe(nums):
+            if self._is_safe(nums):
                 count += 1
         return count
             
 
-class Dec02b(task.StrTask):
-    def is_safe(self, nums):
-        diffs = [nums[i] - nums[i - 1] for i in range(1, len(nums))]
-
-        for n in diffs:
-            if (abs(n) < 1) or (abs(n) > 3) or (n > 0) != (diffs[0] > 0):
-                return False
-        return True
-
-    def run_list(self, data):
+class Dec02b(Dec02):
+    def run(self, data):
         count = 0
         for row in data:
             nums = list(map(lambda x: int(x), row.split()))
-            safe = self.is_safe(nums)
+            safe = self._is_safe(nums)
 
             if not safe:
                 for skip in range(len(nums)):
-                    if self.is_safe([nums[i] for i in range(len(nums)) if i != skip]):
+                    if self._is_safe([nums[i] for i in range(len(nums)) if i != skip]):
                         safe = True
                         break
 
@@ -49,8 +42,8 @@ class Dec02b(task.StrTask):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        Dec02a().run_tests_from_commandline()
-        Dec02b().run_tests_from_commandline()
+        Dec02a().run_specific_tests(sys.argv[1:])
+        Dec02b().run_specific_tests(sys.argv[1:])
     else:
         Dec02a().runtests()
         Dec02b().runtests()

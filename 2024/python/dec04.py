@@ -4,7 +4,10 @@ import pprint
 import sys
 import task
 
-class Dec04a(task.StrTask):
+class Dec04(task.Task):
+    pass
+
+class Dec04a(Dec04):
     xmas_tests = [
         ( 1,  0),
         (-1,  0),
@@ -31,7 +34,7 @@ class Dec04a(task.StrTask):
 
         return 0
 
-    def run_list(self, data):
+    def run(self, data):
         count = 0
         maxx = len(data[0])
         maxy = len(data)
@@ -44,7 +47,7 @@ class Dec04a(task.StrTask):
         return count
 
 
-class Dec04b(task.StrTask):
+class Dec04b(Dec04):
     def find_x_mas(self, data, xpos, ypos, maxx, maxy):
         if xpos + 3 <= maxx and ypos + 3 <= maxy:
             # M.S  S.S  M.M  S.M
@@ -60,7 +63,7 @@ class Dec04b(task.StrTask):
             
         return 0
 
-    def run_list(self, data):
+    def run(self, data):
         count = 0
         maxx = len(data[0])
         maxy = len(data)
@@ -72,8 +75,8 @@ class Dec04b(task.StrTask):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        Dec04a().run_tests_from_commandline()
-        Dec04b().run_tests_from_commandline()
+        Dec04a().run_specific_tests(sys.argv[1:])
+        Dec04b().run_specific_tests(sys.argv[1:])
     else:
         Dec04a().runtests()
         Dec04b().runtests()

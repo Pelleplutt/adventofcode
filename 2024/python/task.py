@@ -195,7 +195,7 @@ class Task(object):
 
     # implement these ########################################################
     def parse(self, data):
-        raise NotImplementedError("Missing parse implementation")
+        return data
 
     def run(self, data):
         raise NotImplementedError("Missing run implementation")

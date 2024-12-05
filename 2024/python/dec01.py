@@ -4,10 +4,11 @@ import pprint
 import sys
 import task
 
-class Dec01a(task.StrTask):
-    """
-    """
-    def run_list(self, data):
+class Dec01(task.Task):
+    pass
+
+class Dec01a(Dec01):
+    def run(self, data):
         llist, rlist = [], []
 
         for ndx, row in enumerate(data):
@@ -28,8 +29,8 @@ class Dec01a(task.StrTask):
 
 
 
-class Dec01b(task.StrTask):
-    def run_list(self, data):
+class Dec01b(Dec01):
+    def run(self, data):
         llist, rlist = [], {}
 
         for ndx, row in enumerate(data):
@@ -45,8 +46,8 @@ class Dec01b(task.StrTask):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        Dec01a().run_tests_from_commandline()
-        Dec01b().run_tests_from_commandline()
+        Dec01a().run_specific_tests(sys.argv[1:])
+        Dec01b().run_specific_tests(sys.argv[1:])
     else:
         Dec01a().runtests()
         Dec01b().runtests()
