@@ -106,19 +106,13 @@ class TestData(object):
                 else:
                     echo.append(f"Expected: {facit[0]}")
         else:
-            if len(facit) > 1:
+            if facit is not None and len(facit) > 1:
                 echo = self._renderresulttable(['Result', 'Expected'], [[out], facit], maxcolwidth=40, maxlines=maxlines)
             else:
                 echo.append(f"Result  : {out}")
-                echo.append(f"Expected: {facit[0]}")
+                if facit is not None:
+                    echo.append(f"Expected: {facit[0]}")
         return echo
-
-    def _shorten(self, s, max=64):
-        if len(s) < max:
-            return s
-        if max < 3:
-            return s[:max]
-        return s[:(max - 3)] + '...'
 
     def _renderresulttable(self, headers, columns, maxcolwidth=40, maxlines=None):
         echo = []
@@ -152,6 +146,8 @@ class TestData(object):
                 cw = colwidhts[i]
                 try:
                     s = str(columns[i][row]).ljust(cw)
+                    if len(s) > maxcolwidth:
+                        s = s[:maxcolwidth - 1] + '+'
                     line += f"| {s} "
                     exhausted = False
                 except IndexError:
