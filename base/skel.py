@@ -5,8 +5,9 @@ import sys
 import task
 
 class DecXX(task.Task):
-    def parse(self, rawdata):
-        pass
+    #def parse(self, rawdata):
+    #    pass
+    pass
 
 class DecXXa(DecXX):
     def run(self, data):
