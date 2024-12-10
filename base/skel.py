@@ -5,8 +5,11 @@ import sys
 import task
 
 class DecXX(task.Task):
-    #def parse(self, rawdata):
-    #    pass
+#    def parse(self, rawdata):
+#        data = []
+#        for rrow in rawdata:
+
+#        return data
     pass
 
 class DecXXa(DecXX):
