@@ -79,7 +79,7 @@ class Dec14b(Dec14):
         min_dl = None
         min_dl_iter = None
 
-        for iter in range(10000):
+        for iter in range(sizex * sizey + 1):
             for rnum, robot in enumerate(robots):
                 x, y = robot[0]
                 vx, vy = robot[1]
